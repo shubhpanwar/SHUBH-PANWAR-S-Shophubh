@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation | ShopHub</title>
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .confirmation-section {
+            padding: 60px 0;
+        }
+        
+        .confirmation-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .confirmation-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .confirmation-header i {
+            font-size: 3rem;
+            color: var(--success);
+            margin-bottom: 15px;
+        }
+        
+        .confirmation-header h1 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .confirmation-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+        
+        .order-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .order-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .info-table {
+            width: 100%;
+        }
+        
+        .info-table td {
+            padding: 10px 0;
+        }
+        
+        .info-table td:first-child {
+            color: var(--gray);
+            width: 40%;
+        }
+        
+        .info-table td:last-child {
+            font-weight: 500;
+        }
+        
+        .shipping-address {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .shipping-address h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .address-details {
+            line-height: 1.6;
+        }
+        
+        .order-items {
+            margin-bottom: 30px;
+        }
+        
+        .order-items h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .item-table th {
+            text-align: left;
+            padding: 10px 15px;
+            border-bottom: 2px solid #eee;
+            color: var(--gray);
+        }
+        
+        .item-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .item-details {
+            padding-left: 10px;
+        }
+        
+        .item-details h4 {
+            margin: 0 0 5px;
+            font-size: 1rem;
+        }
+        
+        .order-summary {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .order-summary h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .summary-label {
+            color: var(--gray);
+        }
+        
+        .summary-value {
+            font-weight: 500;
+        }
+        
+        .summary-row.total {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .confirmation-actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .confirmation-actions .btn {
+            margin: 0 10px;
+            padding: 12px 25px;
+        }
+        
+        .order-not-found {
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .order-not-found i {
+            font-size: 4rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .order-not-found h2 {
+            margin-bottom: 15px;
+        }
+        
+        .order-not-found p {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .item-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header section -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <h1>ShopHub</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products, brands and more...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="#" class="login-btn">Login</a></li>
+                        <li class="cart-icon"><a href="cart.html"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a></li>
+                    </ul>
+                </nav>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Confirmation section -->
+    <section class="confirmation-section">
+        <div class="container">
+            <div id="order-confirmation-content">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ShopHub</h3>
+                    <p>Your one-stop destination for all your shopping needs. We offer quality products at affordable prices.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Order History</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Commerce St, City, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 234 567 8900</li>
+                        <li><i class="fas fa-envelope"></i> support@shophub.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ShopHub. All Rights Reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../JAVASCRIPT/products.js"></script>
+    <script src="../JAVASCRIPT/order-confirmation.js"></script>
+    <script src="../JAVASCRIPT/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get current order from localStorage
+            const currentOrder = JSON.parse(localStorage.getItem('currentOrder'));
+            const confirmationContent = document.getElementById('order-confirmation-content');
+            
+            // If no order found, show error message
+            if (!currentOrder) {
+                confirmationContent.innerHTML = `
+                    <div class="order-not-found">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h2>Order Not Found</h2>
+                        <p>We couldn't find your order details. Please check your email for confirmation.</p>
+                        <a href="index.html" class="btn">Continue Shopping</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Format date
+            const orderDate = new Date(currentOrder.date);
+            const formattedDate = orderDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Calculate items count
+            const itemsCount = currentOrder.items.reduce((total, item) => total + item.quantity, 0);
+            
+            // Generate order confirmation HTML
+            const confirmationHTML = `
+                <div class="confirmation-container">
+                    <div class="confirmation-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h1>Order Confirmed!</h1>
+                        <p>Thank you for your purchase. Your order has been received.</p>
+                    </div>
+                    
+                    <div class="order-info">
+                        <div class="order-details">
+                            <h3>Order Details</h3>
+                            <table class="info-table">
+                                <tr>
+                                    <td>Order Number:</td>
+                                    <td>#${currentOrder.id}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date:</td>
+                                    <td>${formattedDate}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total:</td>
+                                    <td>₹${currentOrder.total.toFixed(2)}</td>
+                                </tr>
+                                <tr>
+                                    <td>Payment Method:</td>
+                                    <td>${currentOrder.payment.method === 'credit-card' ? 'Credit Card' : 
+                                          currentOrder.payment.method === 'paypal' ? 'PayPal' : 'Apple Pay'}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="order-status">
+                            <h3>Order Status</h3>
+                            <table class="info-table">
+                                <tr>
+                                    <td>Status:</td>
+                                    <td><span class="status-processing">${currentOrder.status.charAt(0).toUpperCase() + currentOrder.status.slice(1)}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Items:</td>
+                                    <td>${itemsCount} item${itemsCount !== 1 ? 's' : ''}</td>
+                                </tr>
+                                <tr>
+                                    <td>Estimated Delivery:</td>
+                                    <td>3-5 business days</td>
+                                </tr>
+                                <tr>
+                                    <td>Track Order:</td>
+                                    <td><a href="#">Track</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="shipping-address">
+                        <h3>Shipping Address</h3>
+                        <div class="address-details">
+                            <p><strong>${currentOrder.shipping.firstName} ${currentOrder.shipping.lastName}</strong></p>
+                            <p>${currentOrder.shipping.address}</p>
+                            <p>${currentOrder.shipping.city}, ${currentOrder.shipping.state} ${currentOrder.shipping.zip}</p>
+                            <p>${currentOrder.shipping.country}</p>
+                            <p>Phone: ${currentOrder.shipping.phone}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="order-items">
+                        <h3>Order Items</h3>
+                        <table class="item-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${currentOrder.items.map(item => `
+                                    <tr>
+                                        <td>
+                                            <div style="display: flex; align-items: center;">
+                                                <img src="${item.image}" alt="${item.name}" class="item-image">
+                                                <div class="item-details">
+                                                    <h4>${item.name}</h4>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>₹${item.price.toFixed(2)}</td>
+                                        <td>${item.quantity}</td>
+                                        <td>₹${(item.price * item.quantity).toFixed(2)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                        <div class="summary-row">
+                            <div class="summary-label">Subtotal:</div>
+                            <div class="summary-value">₹${currentOrder.subtotal.toFixed(2)}</div>
+                        </div>
+                        <div class="summary-row">
+                            <div class="summary-label">Shipping:</div>
+                            <div class="summary-value">${currentOrder.shipping === 0 ? 'Free' : `₹${currentOrder.shipping.toFixed(2)}`}</div>
+                        </div>
+                        <div class="summary-row">
+                            <div class="summary-label">Tax:</div>
+                            <div class="summary-value">₹${currentOrder.tax.toFixed(2)}</div>
+                        </div>
+                        <div class="summary-row total">
+                            <div class="summary-label">Total:</div>
+                            <div class="summary-value">₹${currentOrder.total.toFixed(2)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="confirmation-actions">
+                        <a href="index.html" class="btn">Continue Shopping</a>
+                        <button class="btn" onclick="window.print()"><i class="fas fa-print"></i> Print Order</button>
+                    </div>
+                </div>
+            `;
+            
+            confirmationContent.innerHTML = confirmationHTML;
+            
+            // Update cart count
+            updateCartCount();
+        });
+    </script>
+</body>
+</html> 

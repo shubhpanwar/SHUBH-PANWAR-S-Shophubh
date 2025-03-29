@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | ShopHub</title>
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header section -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <h1>ShopHub</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products, brands and more...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html" class="active">Products</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="#" class="login-btn">Login</a></li>
+                        <li class="cart-icon"><a href="cart.html"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a></li>
+                    </ul>
+                </nav>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Products section -->
+    <section class="products-section">
+        <div class="container">
+            <h1 class="section-title">All Products</h1>
+            
+            <div class="products-header">
+                <div class="results-count">
+                    <span id="products-count">0</span> products found
+                </div>
+                <div class="sort-options">
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select">
+                        <option value="featured">Featured</option>
+                        <option value="price-low-high">Price: Low to High</option>
+                        <option value="price-high-low">Price: High to Low</option>
+                        <option value="name-a-z">Name: A to Z</option>
+                        <option value="name-z-a">Name: Z to A</option>
+                        <option value="rating">Top Rated</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="products-grid-container">
+                <div class="filter-sidebar">
+                    <h2>Filters</h2>
+                    
+                    <div class="filter-group">
+                        <h3>Categories</h3>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="all-categories" checked>
+                            <label for="all-categories">All Categories</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="shoes">
+                            <label for="shoes">Shoes</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="electronics">
+                            <label for="electronics">Electronics</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="clothing">
+                            <label for="clothing">Clothing</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="accessories">
+                            <label for="accessories">Accessories</label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h3>Price Range</h3>
+                        <div class="price-range">
+                            <input type="number" id="min-price" placeholder="Min">
+                            <input type="number" id="max-price" placeholder="Max">
+                        </div>
+                        <button class="btn-small" id="apply-price">Apply</button>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h3>Brand</h3>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="all-brands" checked>
+                            <label for="all-brands">All Brands</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="adidas">
+                            <label for="adidas">Adidas</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="sony">
+                            <label for="sony">Sony</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="urban-outfitters">
+                            <label for="urban-outfitters">Urban Outfitters</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="fitbit">
+                            <label for="fitbit">Fitbit</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="ray-ban">
+                            <label for="ray-ban">Ray-Ban</label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h3>Availability</h3>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="in-stock" checked>
+                            <label for="in-stock">In Stock</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="on-sale">
+                            <label for="on-sale">On Sale</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="new-arrivals">
+                            <label for="new-arrivals">New Arrivals</label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" id="reset-filters">Reset Filters</button>
+                </div>
+                
+                <div class="products-grid" id="products-grid">
+                    <!-- Products will be loaded from JavaScript -->
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <a href="#" class="page-link active">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <a href="#" class="page-link"><i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Get exclusive offers, new arrivals, and insider discounts</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ShopHub</h3>
+                    <p>Your one-stop destination for all your shopping needs. We offer quality products at affordable prices.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Order History</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Commerce St, City, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 234 567 8900</li>
+                        <li><i class="fas fa-envelope"></i> support@shophub.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ShopHub. All Rights Reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Create Account</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+        </div>
+    </div>
+
+    <script src="../JAVASCRIPT/products.js"></script>
+    <script src="../JAVASCRIPT/product-filter.js"></script>
+    <script src="../JAVASCRIPT/app.js"></script>
+    <script>
+        // Additional JavaScript for the Products page
+        document.addEventListener('DOMContentLoaded', () => {
+            const productsGrid = document.getElementById('products-grid');
+            const productsCount = document.getElementById('products-count');
+            const sortSelect = document.getElementById('sort-select');
+            const resetFiltersBtn = document.getElementById('reset-filters');
+            const applyPriceBtn = document.getElementById('apply-price');
+            const minPriceInput = document.getElementById('min-price');
+            const maxPriceInput = document.getElementById('max-price');
+            const categoryCheckboxes = document.querySelectorAll('.filter-group:nth-child(1) .checkbox-group input[type="checkbox"]');
+            const brandCheckboxes = document.querySelectorAll('.filter-group:nth-child(3) .checkbox-group input[type="checkbox"]');
+            const availabilityCheckboxes = document.querySelectorAll('.filter-group:nth-child(4) .checkbox-group input[type="checkbox"]');
+            
+            // Get URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+            const categoryParam = urlParams.get('category');
+            
+            // Current filter settings
+            const filterSettings = {
+                search: searchQuery || '',
+                category: categoryParam || 'all',
+                minPrice: null,
+                maxPrice: null,
+                brands: [],
+                inStock: true,
+                onSale: false,
+                isNew: false,
+                sort: 'featured'
+            };
+            
+            // Load initial products
+            loadProducts();
+            
+            // Update filters based on URL params
+            if (searchQuery) {
+                document.querySelector('.search-bar input').value = searchQuery;
+            }
+            
+            if (categoryParam) {
+                categoryCheckboxes.forEach(checkbox => {
+                    if (checkbox.id === 'all-categories') {
+                        checkbox.checked = categoryParam === 'all';
+                    } else if (checkbox.id === categoryParam.toLowerCase()) {
+                        checkbox.checked = true;
+                        document.getElementById('all-categories').checked = false;
+                    }
+                });
+            }
+            
+            // Event listeners
+            sortSelect.addEventListener('change', () => {
+                filterSettings.sort = sortSelect.value;
+                loadProducts();
+            });
+            
+            resetFiltersBtn.addEventListener('click', () => {
+                // Reset all filters
+                filterSettings.category = 'all';
+                filterSettings.minPrice = null;
+                filterSettings.maxPrice = null;
+                filterSettings.brands = [];
+                filterSettings.inStock = true;
+                filterSettings.onSale = false;
+                filterSettings.isNew = false;
+                
+                // Reset UI
+                minPriceInput.value = '';
+                maxPriceInput.value = '';
+                
+                // Reset checkboxes
+                categoryCheckboxes.forEach(checkbox => {
+                    checkbox.checked = checkbox.id === 'all-categories';
+                });
+                
+                brandCheckboxes.forEach(checkbox => {
+                    checkbox.checked = checkbox.id === 'all-brands';
+                });
+                
+                availabilityCheckboxes.forEach(checkbox => {
+                    checkbox.checked = checkbox.id === 'in-stock';
+                });
+                
+                // Reload products
+                loadProducts();
+            });
+            
+            applyPriceBtn.addEventListener('click', () => {
+                filterSettings.minPrice = minPriceInput.value ? parseFloat(minPriceInput.value) : null;
+                filterSettings.maxPrice = maxPriceInput.value ? parseFloat(maxPriceInput.value) : null;
+                loadProducts();
+            });
+            
+            // Category filter
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.id === 'all-categories' && checkbox.checked) {
+                        // If 'All Categories' is checked, uncheck others
+                        categoryCheckboxes.forEach(cb => {
+                            if (cb.id !== 'all-categories') {
+                                cb.checked = false;
+                            }
+                        });
+                        filterSettings.category = 'all';
+                    } else if (checkbox.id !== 'all-categories' && checkbox.checked) {
+                        // If a specific category is checked, uncheck 'All Categories'
+                        document.getElementById('all-categories').checked = false;
+                        
+                        // Set the category
+                        filterSettings.category = checkbox.id.charAt(0).toUpperCase() + checkbox.id.slice(1);
+                    }
+                    
+                    // If no categories are checked, select 'All Categories'
+                    const anyChecked = Array.from(categoryCheckboxes).some(cb => cb.checked);
+                    if (!anyChecked) {
+                        document.getElementById('all-categories').checked = true;
+                        filterSettings.category = 'all';
+                    }
+                    
+                    loadProducts();
+                });
+            });
+            
+            // Brand filter
+            brandCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.id === 'all-brands' && checkbox.checked) {
+                        // If 'All Brands' is checked, uncheck others
+                        brandCheckboxes.forEach(cb => {
+                            if (cb.id !== 'all-brands') {
+                                cb.checked = false;
+                            }
+                        });
+                        filterSettings.brands = [];
+                    } else if (checkbox.id !== 'all-brands' && checkbox.checked) {
+                        // If a specific brand is checked, uncheck 'All Brands'
+                        document.getElementById('all-brands').checked = false;
+                        
+                        // Convert checkbox ID to brand name
+                        const brandName = checkbox.id
+                            .split('-')
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(' ');
+                        
+                        // Add brand to filter
+                        if (!filterSettings.brands.includes(brandName)) {
+                            filterSettings.brands.push(brandName);
+                        }
+                    } else if (checkbox.id !== 'all-brands' && !checkbox.checked) {
+                        // Remove brand from filter
+                        const brandName = checkbox.id
+                            .split('-')
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(' ');
+                        
+                        filterSettings.brands = filterSettings.brands.filter(brand => brand !== brandName);
+                    }
+                    
+                    // If no brands are checked, select 'All Brands'
+                    const anyChecked = Array.from(brandCheckboxes).some(cb => cb.checked);
+                    if (!anyChecked) {
+                        document.getElementById('all-brands').checked = true;
+                        filterSettings.brands = [];
+                    }
+                    
+                    loadProducts();
+                });
+            });
+            
+            // Availability filter
+            availabilityCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    filterSettings.inStock = document.getElementById('in-stock').checked;
+                    filterSettings.onSale = document.getElementById('on-sale').checked;
+                    filterSettings.isNew = document.getElementById('new-arrivals').checked;
+                    
+                    loadProducts();
+                });
+            });
+            
+            // Function to load products
+            function loadProducts() {
+                // Get all products
+                let allProducts = getProducts();
+                
+                // Apply filters
+                let filteredProducts = allProducts.filter(product => {
+                    let match = true;
+                    
+                    // Filter by search
+                    if (filterSettings.search) {
+                        const searchLower = filterSettings.search.toLowerCase();
+                        match = match && (
+                            product.name.toLowerCase().includes(searchLower) ||
+                            product.description.toLowerCase().includes(searchLower) ||
+                            product.category.toLowerCase().includes(searchLower) ||
+                            product.brand.toLowerCase().includes(searchLower)
+                        );
+                    }
+                    
+                    // Filter by category
+                    if (filterSettings.category !== 'all') {
+                        match = match && product.category === filterSettings.category;
+                    }
+                    
+                    // Filter by price
+                    if (filterSettings.minPrice !== null) {
+                        match = match && product.price >= filterSettings.minPrice;
+                    }
+                    
+                    if (filterSettings.maxPrice !== null) {
+                        match = match && product.price <= filterSettings.maxPrice;
+                    }
+                    
+                    // Filter by brand
+                    if (filterSettings.brands.length > 0) {
+                        match = match && filterSettings.brands.includes(product.brand);
+                    }
+                    
+                    // Filter by availability
+                    if (filterSettings.inStock) {
+                        match = match && product.inStock;
+                    }
+                    
+                    if (filterSettings.onSale) {
+                        match = match && product.isSale;
+                    }
+                    
+                    if (filterSettings.isNew) {
+                        match = match && product.isNew;
+                    }
+                    
+                    return match;
+                });
+                
+                // Sort products
+                if (filterSettings.sort) {
+                    switch (filterSettings.sort) {
+                        case 'price-low-high':
+                            filteredProducts.sort((a, b) => a.price - b.price);
+                            break;
+                        case 'price-high-low':
+                            filteredProducts.sort((a, b) => b.price - a.price);
+                            break;
+                        case 'name-a-z':
+                            filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                            break;
+                        case 'name-z-a':
+                            filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+                            break;
+                        case 'rating':
+                            filteredProducts.sort((a, b) => b.rating - a.rating);
+                            break;
+                        default:
+                            // Default is featured
+                            filteredProducts.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+                    }
+                }
+                
+                // Update product count
+                productsCount.textContent = filteredProducts.length;
+                
+                // Render products
+                renderProducts(productsGrid, filteredProducts);
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories | ShopHub</title>
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .categories-section {
+            padding: 60px 0;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .category-box {
+            position: relative;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .category-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            transition: background 0.3s ease;
+        }
+        
+        .category-box:hover .category-overlay {
+            background: linear-gradient(to top, rgba(var(--primary-rgb), 0.8), transparent);
+        }
+        
+        .category-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .category-count {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .category-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+        
+        .featured-categories {
+            margin-bottom: 60px;
+        }
+        
+        .category-section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .category-section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .category-section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .all-categories .categories-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .all-categories .category-box {
+            height: 250px;
+        }
+        
+        @media (max-width: 992px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .all-categories .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .all-categories .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .categories-grid,
+            .all-categories .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header section -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <h1>ShopHub</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products, brands and more...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="categories.html" class="active">Categories</a></li>
+                        <li><a href="#" class="login-btn">Login</a></li>
+                        <li class="cart-icon"><a href="cart.html"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a></li>
+                    </ul>
+                </nav>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Categories section -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / Categories
+            </div>
+            
+            <div class="featured-categories">
+                <div class="category-section-title">
+                    <h2>Featured Categories</h2>
+                    <p>Explore our most popular shopping categories with exclusive collections and deals</p>
+                </div>
+                
+                <div class="categories-grid" id="featured-categories">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="all-categories">
+                <div class="category-section-title">
+                    <h2>All Categories</h2>
+                    <p>Browse through our complete range of products organized by categories</p>
+                </div>
+                
+                <div class="categories-grid" id="all-categories">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Get exclusive offers, new arrivals, and insider discounts</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ShopHub</h3>
+                    <p>Your one-stop destination for all your shopping needs. We offer quality products at affordable prices.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Order History</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Commerce St, City, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 234 567 8900</li>
+                        <li><i class="fas fa-envelope"></i> support@shophub.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ShopHub. All Rights Reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Create Account</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+        </div>
+    </div>
+
+    <script src="../JAVASCRIPT/products.js"></script>
+    <script src="../JAVASCRIPT/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get categories
+            const categories = getCategories();
+            
+            // Define featured categories (you could also add a 'featured' flag to categories in products.js)
+            const featuredCategoryIds = [1, 2, 3]; // IDs of categories to feature
+            
+            // Render featured categories
+            const featuredCategoriesContainer = document.getElementById('featured-categories');
+            const featuredCategories = categories.filter(cat => featuredCategoryIds.includes(cat.id));
+            
+            renderCategories(featuredCategoriesContainer, featuredCategories);
+            
+            // Render all categories
+            const allCategoriesContainer = document.getElementById('all-categories');
+            
+            // Add some additional categories for demonstration
+            const extendedCategories = [
+                ...categories,
+                {
+                    id: 5,
+                    name: 'Home & Kitchen',
+                    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136',
+                    count: 95
+                },
+                {
+                    id: 6,
+                    name: 'Sports & Fitness',
+                    image: 'https://images.unsplash.com/photo-1434596922112-19c563067271',
+                    count: 68
+                },
+                {
+                    id: 7,
+                    name: 'Books',
+                    image: 'https://images.unsplash.com/photo-1524578271613-d550eacf6090',
+                    count: 112
+                },
+                {
+                    id: 8,
+                    name: 'Toys & Games',
+                    image: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088',
+                    count: 54
+                }
+            ];
+            
+            renderCategories(allCategoriesContainer, extendedCategories);
+            
+            // Function to render categories
+            function renderCategories(container, categories) {
+                let html = '';
+                
+                categories.forEach(category => {
+                    html += `
+                        <div class="category-box">
+                            <img src="${category.image}" alt="${category.name}" class="category-img">
+                            <div class="category-overlay">
+                                <div class="category-name">${category.name}</div>
+                                <div class="category-count">${category.count} Products</div>
+                            </div>
+                            <a href="products.html?category=${category.name}" class="category-link" aria-label="${category.name}"></a>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+            }
+        });
+    </script>
+</body>
+</html> 

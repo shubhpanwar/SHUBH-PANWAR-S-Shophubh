@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | ShopHub</title>
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .cart-section {
+            padding: 60px 0;
+        }
+        
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .cart-items {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .cart-summary {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .cart-actions button {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            transition: var(--transition);
+        }
+        
+        .cart-actions button:hover {
+            color: var(--danger);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .empty-cart i {
+            font-size: 4rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .empty-cart p {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .cart-table {
+            width: 100%;
+        }
+        
+        .cart-table th {
+            text-align: left;
+            padding: 10px;
+            color: var(--gray);
+            font-weight: 500;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        
+        .cart-product {
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-product img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        
+        .cart-product-info h3 {
+            margin: 0 0 5px;
+            font-size: 1rem;
+        }
+        
+        .cart-product-info .product-category {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        .cart-quantity {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .quantity-input {
+            width: 40px;
+            height: 30px;
+            margin: 0 5px;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .remove-item:hover {
+            color: var(--danger);
+        }
+        
+        .summary-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .summary-label {
+            color: var(--gray-dark);
+        }
+        
+        .summary-value {
+            font-weight: 500;
+        }
+        
+        .summary-row.total {
+            border-top: 1px solid #eee;
+            margin-top: 15px;
+            padding-top: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+        }
+        
+        @media (max-width: 992px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .cart-product {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: center;
+            }
+            
+            .cart-product img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header section -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <h1>ShopHub</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for products, brands and more...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="#" class="login-btn">Login</a></li>
+                        <li class="cart-icon"><a href="cart.html" class="active"><i class="fas fa-shopping-cart"></i> <span class="cart-count">0</span></a></li>
+                    </ul>
+                </nav>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart section -->
+    <section class="cart-section">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / Shopping Cart
+            </div>
+            
+            <div class="cart-container">
+                <div class="cart-items">
+                    <div class="cart-header">
+                        <h2 class="cart-title">Shopping Cart</h2>
+                        <div class="cart-actions">
+                            <button id="clear-cart">Clear Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div id="cart-items-container">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="cart-summary">
+                    <h3 class="summary-title">Order Summary</h3>
+                    <div class="summary-row">
+                        <div class="summary-label">Subtotal</div>
+                        <div class="summary-value" id="cart-subtotal">₹0.00</div>
+                    </div>
+                    <div class="summary-row">
+                        <div class="summary-label">Shipping</div>
+                        <div class="summary-value" id="cart-shipping">₹0.00</div>
+                    </div>
+                    <div class="summary-row">
+                        <div class="summary-label">Tax (10%)</div>
+                        <div class="summary-value" id="cart-tax">₹0.00</div>
+                    </div>
+                    <div class="summary-row total">
+                        <div class="summary-label">Total</div>
+                        <div class="summary-value" id="cart-total">₹0.00</div>
+                    </div>
+                    
+                    <button class="btn checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+                    
+                    <div class="promo-code" style="margin-top: 20px;">
+                        <div class="form-group">
+                            <label for="promo-code">Promo Code</label>
+                            <div style="display: flex;">
+                                <input type="text" id="promo-code" style="flex: 1; border-radius: 5px 0 0 5px; border: 1px solid #ddd; padding: 10px;">
+                                <button class="btn" style="border-radius: 0 5px 5px 0; padding: 10px 15px;">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Get exclusive offers, new arrivals, and insider discounts</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ShopHub</h3>
+                    <p>Your one-stop destination for all your shopping needs. We offer quality products at affordable prices.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Order History</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Commerce St, City, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 234 567 8900</li>
+                        <li><i class="fas fa-envelope"></i> support@shophub.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ShopHub. All Rights Reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Create Account</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+        </div>
+    </div>
+
+    <script src="../JAVASCRIPT/products.js"></script>
+    <script src="../JAVASCRIPT/cart.js"></script>
+    <script src="../JAVASCRIPT/app.js"></script>
+    <script>
+        // Additional JavaScript for Cart page
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+            const cartShipping = document.getElementById('cart-shipping');
+            const cartTax = document.getElementById('cart-tax');
+            const cartTotal = document.getElementById('cart-total');
+            const clearCartBtn = document.getElementById('clear-cart');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            // Load cart from localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Render cart
+            renderCart();
+            
+            // Clear cart button
+            clearCartBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to clear your cart?')) {
+                    cart = [];
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    renderCart();
+                    updateCartCount();
+                    showToast('Cart cleared!');
+                }
+            });
+            
+            // Checkout button
+            checkoutBtn.addEventListener('click', () => {
+                if (cart.length === 0) {
+                    showToast('Your cart is empty!');
+                    return;
+                }
+                
+                if (!currentUser) {
+                    openModal('login');
+                    showToast('Please login to checkout');
+                    return;
+                }
+                
+                window.location.href = 'checkout.html';
+            });
+            
+            // Function to render cart
+            function renderCart() {
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = `
+                        <div class="empty-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>Your cart is empty</h3>
+                            <p>Looks like you haven't added anything to your cart yet.</p>
+                            <a href="products.html" class="btn">Continue Shopping</a>
+                        </div>
+                    `;
+                    
+                    // Update summary
+                    cartSubtotal.textContent = '₹0.00';
+                    cartShipping.textContent = '₹0.00';
+                    cartTax.textContent = '₹0.00';
+                    cartTotal.textContent = '₹0.00';
+                    
+                    return;
+                }
+                
+                // Calculate totals
+                const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+                const shipping = subtotal > 0 ? (subtotal > 100 ? 0 : 10) : 0;
+                const tax = subtotal * 0.1;
+                const total = subtotal + shipping + tax;
+                
+                // Update summary
+                cartSubtotal.textContent = `₹${subtotal.toFixed(2)}`;
+                cartShipping.textContent = shipping === 0 ? 'Free' : `₹${shipping.toFixed(2)}`;
+                cartTax.textContent = `₹${tax.toFixed(2)}`;
+                cartTotal.textContent = `₹${total.toFixed(2)}`;
+                
+                // Generate cart items HTML
+                let cartItemsHTML = `
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                cart.forEach((item, index) => {
+                    cartItemsHTML += `
+                        <tr>
+                            <td>
+                                <div class="cart-product">
+                                    <img src="${item.image}" alt="${item.name}">
+                                    <div class="cart-product-info">
+                                        <h3>${item.name}</h3>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>₹${item.price.toFixed(2)}</td>
+                            <td>
+                                <div class="cart-quantity">
+                                    <button class="quantity-btn decrease-quantity" data-index="${index}">-</button>
+                                    <input type="number" min="1" value="${item.quantity}" class="quantity-input" data-index="${index}">
+                                    <button class="quantity-btn increase-quantity" data-index="${index}">+</button>
+                                </div>
+                            </td>
+                            <td>₹${(item.price * item.quantity).toFixed(2)}</td>
+                            <td>
+                                <button class="remove-item" data-index="${index}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                cartItemsHTML += `
+                        </tbody>
+                    </table>
+                `;
+                
+                cartItemsContainer.innerHTML = cartItemsHTML;
+                
+                // Add event listeners to quantity buttons and remove buttons
+                const decreaseButtons = document.querySelectorAll('.decrease-quantity');
+                const increaseButtons = document.querySelectorAll('.increase-quantity');
+                const quantityInputs = document.querySelectorAll('.cart-quantity .quantity-input');
+                const removeButtons = document.querySelectorAll('.remove-item');
+                
+                decreaseButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const index = parseInt(button.getAttribute('data-index'));
+                        if (cart[index].quantity > 1) {
+                            cart[index].quantity--;
+                            localStorage.setItem('cart', JSON.stringify(cart));
+                            renderCart();
+                            updateCartCount();
+                        }
+                    });
+                });
+                
+                increaseButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const index = parseInt(button.getAttribute('data-index'));
+                        cart[index].quantity++;
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        renderCart();
+                        updateCartCount();
+                    });
+                });
+                
+                quantityInputs.forEach(input => {
+                    input.addEventListener('change', () => {
+                        const index = parseInt(input.getAttribute('data-index'));
+                        const newQuantity = parseInt(input.value);
+                        
+                        if (newQuantity > 0) {
+                            cart[index].quantity = newQuantity;
+                            localStorage.setItem('cart', JSON.stringify(cart));
+                            renderCart();
+                            updateCartCount();
+                        } else {
+                            input.value = cart[index].quantity; // Reset to previous value
+                        }
+                    });
+                });
+                
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const index = parseInt(button.getAttribute('data-index'));
+                        cart.splice(index, 1);
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        renderCart();
+                        updateCartCount();
+                        showToast('Item removed from cart!');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
